@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOXED: Extract XED files online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #777;
+        }
+
+        form {
+            margin: 20px auto;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .uploading {
+            display: none;
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        .loading-spinner {
+            display: none;
+            border: 4px solid rgba(0, 0, 0, 0.3);
+            border-top: 4px solid #007BFF;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .uploading-message {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .response-message {
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        .response-link {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>VOXED: An online extraction tool <br>for Kinect V1 XED files </h1>
+    <p>Upload a XED file and receive a ZIP response with its contents</p>
+    <form action="https://voxed.azurewebsites.net/api/xeddecode" method="post" enctype="multipart/form-data">
+        <label for="file">Choose a XED file:</label>
+        <input type="file" name="file" id="file" accept=".xed" required>
+        <br>
+        <div class="uploading" id="uploading">Uploading...</div>
+        <!--<div class="loading-spinner" id="loading-spinner"></div>-->
+        <input type="submit" value="Upload File" id="upload-button">
+        <div class="uploading-message hidden" id="uploading-message"><br>Please wait while we process your request...</div>
+    </form>
+
+    <script>
+        document.getElementById('upload-button').addEventListener('click', function() {
+            date = new Date();
+            hours = date.getHours();
+            minutes = date.getMinutes();
+            seconds = date.getSeconds();
+            milliseconds = date.getMilliseconds();
+            timeString = `${hours}:${minutes}:${seconds}.${milliseconds}`;
+
+            console.log(timeString)
+
+            document.getElementById('uploading').style.display = 'inline';
+            //document.getElementById('loading-spinner').style.display = 'inline';
+            document.getElementById('upload-button').style.display = 'none';
+            document.getElementById('uploading-message').style.display = 'inline';
+        });
+    </script>
+</body>
+</html>
